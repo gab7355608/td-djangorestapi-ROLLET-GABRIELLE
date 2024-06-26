@@ -1,0 +1,6 @@
+<h1>Confirmer la suppression de la publication "{{ publication.titre }}"</h1>
+<form method="post">
+    {% csrf_token %}
+    <p>Êtes-vous sûr de vouloir supprimer cette publication ? Cette action est irréversible.</p>
+    <input type="submit" value="Confirmer la suppression">
+</form>

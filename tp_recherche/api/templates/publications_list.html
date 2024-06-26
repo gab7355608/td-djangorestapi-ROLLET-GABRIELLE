@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Liste des Publications</title>
+</head>
+<body>
+    <h2>Liste des Publications</h2>
+    <ul>
+        {% for publication in publications %}
+            <li>{{ publication.titre }}</li>
+        {% endfor %}
+    </ul>
+    <a href="{% url 'publication_create' %}">Ajouter une Nouvelle Publication</a>
+</body>
+</html>

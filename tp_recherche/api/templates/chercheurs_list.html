@@ -1,0 +1,15 @@
+<!-- chercheur_list.html -->
+
+<h1>Liste des chercheurs</h1>
+
+<ul>
+  {% for chercheur in chercheurs %}
+    <li>
+      {{ chercheur.nom }} - {{ chercheur.specialite }}
+      <form action="{% url 'chercheur_delete' chercheur.id %}" method="post" style="display: inline;">
+        {% csrf_token %}
+        <input type="submit" value="Supprimer">
+      </form>
+    </li>
+  {% endfor %}
+</ul>

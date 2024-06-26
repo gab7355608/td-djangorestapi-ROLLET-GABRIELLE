@@ -1,0 +1,32 @@
+<!-- api/templates/projet_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Projets de Recherche</title>
+</head>
+<body>
+    <h1>Liste des Projets de Recherche</h1>
+    
+    <ul>
+        {% for projet in projets %}
+            <li>
+                <strong>{{ projet.titre }}</strong><br>
+                <p>{{ projet.description }}</p>
+                <p>Date de début: {{ projet.date_debut }}</p>
+                <p>Date de fin prévue: {{ projet.date_fin_prevue }}</p>
+                <p>Chef de projet: {{ projet.chef_projet.nom }}</p>
+                <p>Chercheurs:
+                    {% for chercheur in projet.chercheurs.all %}
+                        {{ chercheur.nom }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="{% url 'projet_create' %}">Créer un nouveau projet</a>
+
+</body>
+</html>

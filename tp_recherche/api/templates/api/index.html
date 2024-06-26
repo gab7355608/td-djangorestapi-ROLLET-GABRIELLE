@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Suivi de Projets de Recherche</title>
+</head>
+<body>
+    <h1>Projets de Recherche</h1>
+    <ul id="projets-list"></ul>
+
+    <h2>Ajouter un Projet</h2>
+    <form id="add-projet-form">
+        Titre: <input type="text" id="titre"><br>
+        Description: <textarea id="description"></textarea><br>
+        Date de début: <input type="date" id="date_debut"><br>
+        Date de fin prévue: <input type="date" id="date_fin_prevue"><br>
+        Chef de projet (ID): <input type="number" id="chef_projet"><br>
+        <button type="submit">Ajouter</button>
+    </form>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/api/projets/')
+                .then(response => response.json())
+                .then(data => {
+                    const projetsList = document.getElementById('projets-list');
+                    data.forEach(projet => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = projet.titre;
+                        projetsList.appendChild(listItem);
+                    });
+                });
+
+            const form = document.getElementById('add-projet-form');
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const titre = document.getElementById('titre').value;
+                const description = document.getElementById('description').value;
+                const date_debut = document.getElementById('date_debut').value;
+                const date_fin_prevue = document.getElementById('date_fin_prevue').value;
+                const chef_projet = document.getElementById('chef_projet').value;
+
+                fetch('/api/projets/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        titre,
+                        description,
+                        date_debut,
+                        date_fin_prevue,
+                        chef_projet
+                    })
+                }).then(response => response.json())
+                .then(data => {
+                    if (data.id) {
+                        const projetsList = document.getElementById('projets-list');
+                        const listItem = document.createElement('li');
+                        listItem.textContent = data.titre;
+                        projetsList.appendChild(listItem);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
